@@ -5,19 +5,19 @@ from google import genai
 from google.genai import types
 from dotenv import load_dotenv
 
-# 1. Local .env file se secret key load karna
+# 1. Load the secret API key from the local .env file
 load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
 
-# Gemini Client setup
+# Initialize the Gemini Client
 client = genai.Client(api_key=api_key)
 
-# Web page ki styling aur title
+# Configure web page styling and title
 st.set_page_config(page_title="nandinisgreen - Your Librarian", page_icon="📚")
 st.title("nandinisgreen")
 st.caption("Your personalized, friendly book recommender & literary connoisseur.")
 
-# System Instructions
+# System Instructions for the AI persona
 instructions = """
 Your name is nandinisgreen. You are an authentic, smart, and friendly professional librarian.
 Your superpower is understanding the user's mood and suggesting the perfect books.
@@ -26,24 +26,24 @@ Speak exactly like a supportive, helpful peer or friend—using a mix of casual 
 Give 2-3 amazing book recommendations based on the user's mood, and briefly explain in a fun, conversational way why they should read it.
 """
 
-# Chat history (memory) ko maintain karne ke liye Streamlit ka session state
+# Initialize Streamlit session state to maintain chat history (memory)
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Purane messages ko screen par dikhana
+# Display previous chat messages from history on the screen
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# User ka input (Chat Box)
+# Chat input box for the user
 if user_input := st.chat_input("Tell me your mood or what kind of book you want to read..."):
     
-    # 1. User ka message screen par dikhao aur save karo
+    # 1. Display the user's message on the screen and save it to history
     st.session_state.messages.append({"role": "user", "content": user_input})
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # 2. Gemini se response lena
+    # 2. Fetch the response from the Gemini model
     with st.chat_message("assistant", avatar="📚"):
         response_placeholder = st.empty()
         
@@ -56,7 +56,7 @@ if user_input := st.chat_input("Tell me your mood or what kind of book you want 
             )
         )
         
-        # 3. Response ko screen par dikhao aur save karo
+        # 3. Display the AI response on the screen and save it to history
         ai_response = response.text
         response_placeholder.markdown(ai_response)
         
