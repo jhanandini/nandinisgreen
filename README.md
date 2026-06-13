@@ -4,7 +4,7 @@ An intelligent, friendly, and witty book recommender system built using the **Ge
 
 ## Features
 * **Personalized Recommendations:** Suggests 2-3 amazing books based on your exact vibe or mood.
-* **Conversational AI:** No formal or heavy textbook language—talks just like a friend.
+* **Conversational AI:** No formal or heavy textbook language, talks just like a friend.
 * **Secure Setup:** Keeps the API keys completely hidden using environment variables (`.env`).
 
 ## Installation & Setup
